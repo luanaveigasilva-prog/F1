@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F1 Brasil | Portal Oficial de Telemetria, Classificação e Notícias</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        f1red: '#E10600',
+                        f1dark: '#15151E',
+                        f1card: '#1F1F2B',
+                        f1border: '#2E2E3E'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Fontes Google -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <!-- CSS Personalizado -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-100 text-gray-900 dark:bg-f1dark dark:text-gray-100 transition-colors duration-300 antialiased">
+
+    <!-- Barra Superior de Telemetria -->
+    <div class="bg-f1red text-white text-xs font-mono py-1.5 px-4 flex justify-between items-center">
+        <div class="flex items-center space-x-2">
+            <span class="inline-block w-2 h-2 rounded-full bg-white animate-pulse"></span>
+            <span class="font-bold tracking-wider uppercase">TELEMETRIA AO VIVO • TEMPORADA 2026</span>
+        </div>
+        <div class="hidden sm:block">
+            PRÓXIMA ETAPA: <span class="font-bold">GP DE LAS VEGAS (21 NOV)</span>
+        </div>
+    </div>
+
+    <!-- Cabeçalho e Navegação -->
+    <header class="sticky top-0 z-40 bg-white/90 dark:bg-f1dark/95 backdrop-blur-md border-b border-gray-200 dark:border-f1border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <a href="#" class="flex items-center space-x-2 group">
+                <div class="bg-f1red text-white font-black italic text-2xl px-2.5 py-0.5 rounded-sm tracking-tighter transform -skew-x-12 group-hover:scale-105 transition-transform">
+                    F1
+                </div>
+                <span class="font-black text-xl tracking-tight uppercase">Brasil</span>
+            </a>
+
+            <nav class="hidden md:flex space-x-8 text-sm font-bold uppercase tracking-wider">
+                <a href="#classificacao" class="hover:text-f1red transition-colors">Classificação</a>
+                <a href="#calendario" class="hover:text-f1red transition-colors">Calendário</a>
+                <a href="#simulador" class="hover:text-f1red transition-colors">Simulador de Largada</a>
+                <a href="#noticias" class="hover:text-f1red transition-colors">Notícias</a>
+            </nav>
+
+            <div class="flex items-center space-x-4">
+                <button id="theme-toggle" class="p-2 rounded-lg bg-gray-200 dark:bg-f1card hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors" title="Alternar tema">
+                    <span id="theme-icon">☀️</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Seção Hero / Próximo GP -->
+    <section class="relative overflow-hidden border-b border-gray-200 dark:border-f1border bg-gradient-to-br from-gray-900 via-f1dark to-black text-white py-16 lg:py-24">
+        <div class="hero-grid-bg absolute inset-0 opacity-20"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="inline-flex items-center space-x-2 bg-f1red/20 border border-f1red/50 text-f1red px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest">
+                        <span>Etapa 22 de 24</span>
+                        <span>•</span>
+                        <span>Circuito de Rua</span>
+                    </div>
+                    <h1 class="text-4xl sm:text-6xl font-black italic uppercase tracking-tight leading-none">
+                        Grande Prêmio de <span class="text-f1red">Las Vegas</span>
+                    </h1>
+                    <p class="text-gray-300 text-lg max-w-2xl">
+                        A reta final da temporada 2026 pega fogo sob as luzes de Nevada. Acompanhe o cronograma completo no horário de Brasília e a disputa direta pelo título.
+                    </p>
+                    
+                    <!-- Contagem Regressiva -->
+                    <div class="pt-2">
+                        <p class="text-xs font-mono uppercase tracking-widest text-gray-400 mb-3">Luzes se apagam em:</p>
+                        <div class="grid grid-cols-4 gap-3 max-w-md text-center">
+                            <div class="bg-f1card/90 border border-f1border rounded-lg p-3">
+                                <span id="cd-days" class="block text-2xl sm:text-3xl font-mono font-bold text-white">02</span>
+                                <span class="text-[10px] uppercase tracking-wider text-gray-400">Dias</span>
+                            </div>
+                            <div class="bg-f1card/90 border border-f1border rounded-lg p-3">
+                                <span id="cd-hours" class="block text-2xl sm:text-3xl font-mono font-bold text-white">14</span>
+                                <span class="text-[10px] uppercase tracking-wider text-gray-400">Horas</span>
+                            </div>
+                            <div class="bg-f1card/90 border border-f1border rounded-lg p-3">
+                                <span id="cd-minutes" class="block text-2xl sm:text-3xl font-mono font-bold text-white">35</span>
+                                <span class="text-[10px] uppercase tracking-wider text-gray-400">Min</span>
+                            </div>
+                            <div class="bg-f1card/90 border border-f1border rounded-lg p-3">
+                                <span id="cd-seconds" class="block text-2xl sm:text-3xl font-mono font-bold text-f1red">00</span>
+                                <span class="text-[10px] uppercase tracking-wider text-gray-400">Seg</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card de Horários (Brasília) -->
+                <div class="lg:col-span-5 bg-f1card/95 border border-f1border rounded-xl p-6 shadow-2xl">
+                    <div class="flex items-center justify-between border-b border-f1border pb-4 mb-4">
+                        <h3 class="font-bold uppercase tracking-wider text-sm">Horários (Brasília)</h3>
+                        <span class="text-xs font-mono bg-gray-800 px-2 py-1 rounded text-gray-300">BRT (UTC-3)</span>
+                    </div>
+                    <ul class="space-y-3 text-sm">
+                        <li class="flex justify-between items-center py-1.5 border-b border-f1border/50">
+                            <span class="text-gray-400">Treino Livre 1</span>
+                            <span class="font-mono font-semibold">Qui, 23:30</span>
+                        </li>
+                        <li class="flex justify-between items-center py-1.5 border-b border-f1border/50">
+                            <span class="text-gray-400">Treino Livre 2</span>
+                            <span class="font-mono font-semibold">Sex, 03:00</span>
+                        </li>
+                        <li class="flex justify-between items-center py-1.5 border-b border-f1border/50">
+                            <span class="text-gray-400">Treino Livre 3</span>
+                            <span class="font-mono font-semibold">Sex, 23:30</span>
+                        </li>
+                        <li class="flex justify-between items-center py-1.5 border-b border-f1border/50">
+                            <span class="text-white font-semibold">Classificação</span>
+                            <span class="font-mono font-bold text-f1red">Sáb, 03:00</span>
+                        </li>
+                        <li class="flex justify-between items-center pt-1.5">
+                            <span class="text-white font-bold uppercase">Corrida Principal</span>
+                            <span class="font-mono font-bold bg-f1red text-white px-2.5 py-0.5 rounded">Dom, 03:00</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Conteúdo Principal -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-20">
+
+        <!-- Seção: Classificação -->
+        <section id="classificacao" class="scroll-mt-24">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-black italic uppercase tracking-tight">Classificação 2026</h2>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">Pontuação atualizada após o GP de São Paulo</p>
+                </div>
+                <div class="inline-flex rounded-lg bg-gray-200 dark:bg-f1card p-1">
+                    <button id="btn-drivers" class="tab-btn active px-4 py-2 rounded-md text-xs font-bold uppercase tracking-wider transition-all">
+                        Pilotos
+                    </button>
+                    <button id="btn-constructors" class="tab-btn px-4 py-2 rounded-md text-xs font-bold uppercase tracking-wider transition-all">
+                        Construtores
+                    </button>
+                </div>
+            </div>
+
+            <div class="bg-white dark:bg-f1card border border-gray-200 dark:border-f1border rounded-xl overflow-hidden shadow-lg">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="border-b border-gray-200 dark:border-f1border text-xs font-mono uppercase text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-black/20">
+                                <th class="py-3.5 px-4 w-16">Pos</th>
+                                <th class="py-3.5 px-4" id="col-entity">Piloto</th>
+                                <th class="py-3.5 px-4 hidden sm:table-cell" id="col-sub">Equipe</th>
+                                <th class="py-3.5 px-4 text-center">Vitórias</th>
+                                <th class="py-3.5 px-4 text-right">Pontos</th>
+                            </tr>
+                        </thead>
+                        <tbody id="standings-body" class="divide-y divide-gray-200 dark:divide-f1border text-sm">
+                            <!-- Preenchido via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção: Simulador de Largada -->
+        <section id="simulador" class="scroll-mt-24">
+            <div class="bg-white dark:bg-f1card border border-gray-200 dark:border-f1border rounded-2xl p-6 sm:p-10 shadow-xl text-center">
+                <span class="text-xs font-mono uppercase tracking-widest text-f1red font-bold">Teste seus reflexos</span>
+                <h2 class="text-2xl sm:text-3xl font-black italic uppercase tracking-tight mt-1 mb-2">Simulador: Luzes se Apagam!</h2>
+                <p class="text-sm text-gray-500 dark:text-gray-400 max-w-xl mx-auto mb-8">
+                    Clique em <strong>Iniciar Sequência</strong>, aguarde as 5 luzes vermelhas acenderem e clique no botão de largada assim que elas se apagarem. Pilotos de F1 reagem em cerca de <strong>0.200s</strong>!
+                </p>
+
+                <!-- Semáforo F1 -->
+                <div class="inline-flex space-x-3 sm:space-x-5 bg-black p-5 sm:p-6 rounded-2xl border-4 border-gray-800 shadow-inner mb-8">
+                    <div class="light-pod flex flex-col space-y-2">
+                        <span class="w-8 h-8 sm:w-11 sm:h-11 rounded-full bg-gray-800"></span>
+                        <span class="w-8 h-8 sm:w-11 sm:h-11 rounded-full bg-gray-800 f1-light" id="light-1"></span>
+                    </div>
+                    <div class="light-pod flex flex-col space-y-2">
+                        <span class="w-8 h-8 sm:w-11 sm:h-11 rounded-full bg-gray-800"></span>
+                        <span class="w-8 h-8 sm:w-11 sm:h-11 rounded-full bg-gray-800 f1-light" id="light-2"></span>
+                    </div>
+                    <div class="light-pod flex flex-col space-y-2">
+                        <span class="w-8 h-8 sm:w-11 sm:h-11 rounded-full bg-gray-800"></span>
+                        <span class="w-8 h-8 sm:w-11 sm:h-11 rounded-full bg-gray-800 f1-light" id="light-3"></span>
+                    </div>
+                    <div class="light-pod flex flex-col space-y-2">
+                        <span class="w-8 h-8 sm:w-11 sm:h-11 rounded-full bg-gray-800"></span>
+                        <span class="w-8 h-8 sm:w-11 sm:h-11 rounded-full bg-gray-800 f1-light" id="light-4"></span>
+                    </div>
+                    <div class="light-pod flex flex-col space-y-2">
+                        <span class="w-8 h-8 sm:w-11 sm:h-11 rounded-full bg-gray-800"></span>
+                        <span class="w-8 h-8 sm:w-11 sm:h-11 rounded-full bg-gray-800 f1-light" id="light-5"></span>
+                    </div>
+                </div>
+
+                <!-- Painel de Controle e Resultado -->
+                <div class="space-y-4">
+                    <div>
+                        <button id="reaction-btn" class="px-8 py-4 rounded-xl font-black uppercase tracking-wider text-white bg-f1red hover:bg-red-700 active:scale-95 transition-all shadow-lg text-base sm:text-lg">
+                            Iniciar Sequência
+                        </button>
+                    </div>
+                    <div class="flex justify-center items-center space-x-6 font-mono text-sm">
+                        <div>
+                            <span class="text-gray-500">Tempo:</span>
+                            <span id="reaction-result" class="font-bold text-lg">--.--- s</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-500">Seu Recorde:</span>
+                            <span id="reaction-best" class="font-bold text-f1red text-lg">--.--- s</span>
+                        </div>
+                    </div>
+                    <p id="reaction-feedback" class="text-xs font-semibold uppercase tracking-wider text-gray-400 h-4"></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção: Calendário -->
+        <section id="calendario" class="scroll-mt-24">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-black italic uppercase tracking-tight">Calendário da Temporada</h2>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">Principais etapas e resultados de 2026</p>
+                </div>
+                <div class="flex space-x-2">
+                    <button data-filter="all" class="filter-btn active px-3 py-1.5 rounded-md text-xs font-bold uppercase bg-f1red text-white">Todas</button>
+                    <button data-filter="upcoming" class="filter-btn px-3 py-1.5 rounded-md text-xs font-bold uppercase bg-gray-200 dark:bg-f1card">Próximas</button>
+                    <button data-filter="completed" class="filter-btn px-3 py-1.5 rounded-md text-xs font-bold uppercase bg-gray-200 dark:bg-f1card">Concluídas</button>
+                </div>
+            </div>
+
+            <div id="calendar-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                <!-- Preenchido via JS -->
+            </div>
+        </section>
+
+        <!-- Seção: Notícias -->
+        <section id="noticias" class="scroll-mt-24">
+            <div class="mb-6">
+                <h2 class="text-2xl sm:text-3xl font-black italic uppercase tracking-tight">Paddock & Análises</h2>
+                <p class="text-sm text-gray-500 dark:text-gray-400">Clique em uma matéria para ler a cobertura completa</p>
+            </div>
+
+            <div id="news-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Preenchido via JS -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Modal de Leitura de Notícias -->
+    <div id="news-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+        <div class="bg-white dark:bg-f1card border border-gray-200 dark:border-f1border rounded-2xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl relative animate-fadeIn">
+            <button id="close-modal" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center font-bold hover:bg-f1red hover:text-white transition-colors">
+                ✕
+            </button>
+            <span id="modal-tag" class="inline-block text-xs font-mono font-bold uppercase bg-f1red text-white px-2.5 py-0.5 rounded mb-3"></span>
+            <h3 id="modal-title" class="text-2xl font-black leading-tight mb-2"></h3>
+            <p id="modal-meta" class="text-xs text-gray-500 dark:text-gray-400 font-mono mb-6"></p>
+            <div id="modal-body" class="space-y-4 text-sm sm:text-base text-gray-700 dark:text-gray-300 leading-relaxed"></div>
+        </div>
+    </div>
+
+    <!-- Rodapé -->
+    <footer class="border-t border-gray-200 dark:border-f1border bg-white dark:bg-black/40 py-10 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center space-x-2">
+                <div class="bg-f1red text-white font-black italic text-lg px-2 py-0.5 rounded-sm transform -skew-x-12">F1</div>
+                <span class="font-bold uppercase tracking-tight">Brasil Portal</span>
+            </div>
+            <p class="text-xs text-gray-500 text-center">
+                Projeto demonstrativo de portal esportivo • Temporada 2026 • Todos os direitos reservados.
+            </p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
